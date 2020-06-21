@@ -48,8 +48,18 @@ It’s not as popular a technique as the TCP Half-Open. First, you have to send 
 
 ![Port Scanning Techniques](assests/5-basic-port-scanning-techniques-960x1078.jpg)
 
+## Defending Port Scanning
+
+- Enable only the traffic you need to access internal hosts — preferably as far as possible from the hosts you’re trying to protect — and deny everything else. This goes for standard ports, such as TCP 80 for HTTP and ICMP for ping requests.
+
+- Configure firewalls to look for potentially malicious behavior over time and have rules in place to cut off attacks if a certain threshold is reached, such as 10 port scans in one minute or 100 consecutive ping (ICMP) requests.
+
+- Most firewalls and IPSs can detect such scanning and cut it off in real time.
+
 ## Resourses
 
 - [Avast Answer](https://smb.avast.com/answers/port-scanning-techniques-and-explanations#:~:text=Port%20scanning%20is%20a%20method,analyzing%20responses%20to%20identify%20vulnerabilities.)
 
 - [Varonis](https://www.varonis.com/blog/port-scanning-techniques/)
+
+- [Dummies.com](https://www.dummies.com/programming/networking/prevent-network-hacking-with-port-scanners/)

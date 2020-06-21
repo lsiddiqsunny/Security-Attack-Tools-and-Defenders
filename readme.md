@@ -5,7 +5,7 @@ In this repository, we are going to discuss some common cyber security attacks, 
 ## Table of Content
 
 1. [Port Scanning](Port%20Scanning/readme.md)
-2. [DNS Amplification Attack](DNS%20Amplification%20Attack/readme.md)
+2. [DOS Attack on DNS Server](DDOS%20Attack%20on%20DNS%20Server/readme.md)
 3. [Dictionary Attack](Dictionary%20and%20Known%20Password%20Attack/readme.pdf)
 
 ## Courtesy
