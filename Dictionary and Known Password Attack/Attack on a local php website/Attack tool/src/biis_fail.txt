@@ -1,0 +1,569 @@
+<!DOCTYPE html?>
+
+
+
+
+
+
+
+
+
+<head>
+<title>BIIS</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+<meta http-equiv="pragma" content="no-cache"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta http-equiv="expires" content="0"/>
+<script type="text/javascript" src="/BIIS_WEB/resource/javascript/jquery/jquery-1.2.6.js"></script>
+
+
+<noscript>
+  <meta http-equiv="Refresh" content="0;URL=nojavascript.jsp"/>
+</noscript>
+
+<!--[if IE]>
+<STYLE type=text/css media=screen>BODY {
+	BEHAVIOR: url(csshover.htc)
+}
+#menu UL A {
+	width: 100%;
+}
+
+#menu li{
+	padding-right: 10px;
+	}
+#menu UL UL LI {
+	FLOAT: left; WIDTH: 100%; HEIGHT: 1%
+}
+#menu UL UL LI A {
+	HEIGHT: 1%
+}
+</STYLE>
+<![endif]-->
+
+<link href="/BIIS_WEB/resource/style/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	function hidestatus(){
+	window.status='';
+	return true;
+	}
+
+	if (document.layers)
+		document.captureEvents(Event.MOUSEOVER | Event.MOUSEOUT)
+
+		document.onmouseover=hidestatus
+		document.onmouseout=hidestatus
+
+
+	function showHideChild(i,vis){
+
+	   var ul = document.getElementById("ulsubmenu_"+i);
+		if(ul!=null)
+	   		ul.style.display=vis;
+	}
+
+
+ function hoverParent(pr,parent){
+	    var a = document.getElementById(pr);
+    	a.style.backgroundColor = "#ddd";
+		a.style.color = "maroon";
+
+   var ul = document.getElementById("ulsubmenu_"+parent);
+		ul.style.display="block";
+    }
+
+    function removeParentHover(pr,parent){
+	    var a = document.getElementById(pr);
+    	a.style.backgroundColor = "";
+		a.style.color = "";
+    }
+
+function displayMenu(cid){
+var count = $(".ulsub").size();
+if(count>2){
+var tcid = "ul_"+cid;
+	$(".ulsub").each(function(index){
+		count++;
+
+		//ul_Common means common taks such as change password, change secret question, view academic council resulation
+		if(this.id!="ul_Common" && this.id!=tcid){
+			var sid = this.id.split("_")[1];
+			var html = $("#h_"+sid).val();
+			$("#a_"+sid).html("[+] "+html);
+			$(this).hide();
+       }
+	});
+
+	$("#ul_"+cid).toggle();
+	var html = $("#h_"+cid).val();
+	var dis = $("#ul_"+cid).css("display");
+	if(dis=='block')
+		$("#a_"+cid).html("[-] "+html);
+	else
+		$("#a_"+cid).html("[+] "+html);
+	setCookie('maingroup',cid,5);
+  }
+}
+
+function setMenu(cid){
+var count = $(".ulsub").size();
+var tcid = "ul_"+cid;
+	$(".ulsub").each(function(index){
+
+		if(this.id!="ul_Common" && this.id!=tcid){
+			var sid = this.id.split("_")[1];
+			var html = $("#h_"+sid).val();
+			$("#a_"+sid).html("[+] "+html);
+			$(this).hide();
+       }
+	});
+
+	if(count>2){
+		$("#ul_"+cid).show();
+		var dis = $("#ul_"+cid).css("display");
+		var html = $("#h_"+cid).val();
+		if(dis=='block')
+			$("#a_"+cid).html("[-] "+html);
+		else
+			$("#a_"+cid).html("[+] "+html);
+    }
+
+}
+
+
+function setCookie(c_name,value,expiredays)
+{
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate()+expiredays);
+	document.cookie=c_name+ "=" +escape(value)+
+		((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+
+function getCookie(c_name)
+{
+if (document.cookie.length>0)
+  {
+  c_start=document.cookie.indexOf(c_name + "=");
+  if (c_start!=-1)
+    {
+    c_start=c_start + c_name.length+1;
+    c_end=document.cookie.indexOf(";",c_start);
+    if (c_end==-1) c_end=document.cookie.length;
+    return unescape(document.cookie.substring(c_start,c_end));
+    }
+  }
+return "";
+}
+</script>
+
+<!-- BUET Website Development Information -->
+<!--
+	* BUET website        0.1 2007/03/31
+	*
+	* Copyright (c) 2007 BUET.
+	* All rights reserved.
+-->
+
+<!--
+	* @version 	0.1 2007 March 31
+ 	* @author 	BIIS Team
+-->
+
+
+<link rel="stylesheet" type="text/css" href="/BIIS_WEB/resource/javascript/dojolib/dijit/themes/tundra/tundra.css">
+        <style type="text/css">
+            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
+        </style>
+</head>
+<body id="pg" onload="hidestatus()" class="tundra">
+	<table align="center" width="995">
+		<tr>
+			<td>
+				<table class="warp_top">
+					<tr>
+						<td class="warp_top_left">
+							&nbsp;
+						</td>
+						<td class="warp_top_bg">
+							&nbsp;
+						</td>
+						<td class="warp_top_right">
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="warp">
+					<tr>
+						<td class="warp_left">
+							&nbsp;
+						</td>
+						<td class="warp_bg">
+							<table align="center" width="100%">
+								<tr>
+									<td>
+										<table class="header">
+											<tr>
+												<td class="header_left">
+													&nbsp;
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td class="top_menu">
+										<table>
+											<tr>
+												<td class="top_menu_left" style="text-align: left;">
+													<a href="javascript:showBuetSite()" style="padding-left: 0px;font-size: medium; font-family:'Times New Roman', Times, serif">BUET Home</a>
+													<a href="javascript:showMedicalSite()" style="padding-left: 5px;font-size: medium; font-family:'Times New Roman', Times, serif">Medical Center</a>
+												</td>
+												<td>
+
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+
+<script type="text/javascript">
+ function showBuetSite()
+ {
+  window.open("http://www.buet.ac.bd");
+ }
+ function showMedicalSite()
+ {
+  window.open("http://biis.buet.ac.bd:8082/MCENTER/index.action");
+ }
+ function showBuetWebMail()
+ {
+  window.open("https://webmail.buet.ac.bd/");
+ }
+ function showInternetService()
+ {
+  window.open("https://webmail.buet.ac.bd");
+ }
+
+</script>
+<tr>
+	<td>
+		<table >
+			<tr>
+				<td class="sidebar">
+					<table>
+						<tr>
+							<td id="menu">
+
+
+
+							</td>
+						</tr>
+						<tr>
+							<td class="search">
+
+								<br />
+								<a href="javascript:showBuetWebMail()"><img
+										src="/BIIS_WEB/resource/images/mail_services.jpg" width="174"
+										height="37" border="0" alt="" /> </a>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td class="content" valign="top">
+					<table width="100%">
+						<tr>
+
+							<td class="content_post" width="100%" style="width: 750px;">
+
+
+<script language="javascript" type="text/javascript"
+	src="/BIIS_WEB/resource/javascript/xmlextras.js"></script>
+<SCRIPT src="/BIIS_WEB/resource/javascript/utils.js"></SCRIPT>
+<SCRIPT src="globals.js"></SCRIPT>
+<SCRIPT src="/BIIS_WEB/resource/javascript/encryption/extended5.js"></SCRIPT>
+<SCRIPT
+	src="/BIIS_WEB/resource/javascript/encryption/fouriermultiply1.js"></SCRIPT>
+<SCRIPT src="/BIIS_WEB/resource/javascript/encryption/rsa2.js"></SCRIPT>
+<script type="text/javascript">
+  var SCdofouriermultiply = true;
+  var ModInverse=new Array;
+  var rsakeylength = null;
+
+  var a = 0;
+
+  var tmpTest = false;
+  function loadKey()
+  {
+  	if(tmpTest)
+  	{
+  	console.log('yyyyyyyyyyyyyyyyyy');
+  	//alert('yyyyyyyyyyyyyyyyyy');
+  	return;
+  	}
+
+  	tmpTest = true;
+  	if( a != 0)
+  		return;
+  	a = 1;
+
+    var i=0;
+    try
+    {
+      var xmlHttp = XmlHttp.create();
+      var datetime=new Date();
+
+ 	  var key = "";
+ 	  var modulus = "";
+ 	  var keylen = "", data;
+
+      xmlHttp.open("GET", '/BIIS_WEB/keyGeneration.do?date='+datetime, true);
+
+
+
+      xmlHttp.onreadystatechange = function ()
+      {
+        if (xmlHttp.readyState == 4)
+        {
+          if (xmlHttp.status==200)
+          {
+            key = xmlHttp.responseXML.getElementsByTagName("key")[0].childNodes[0].nodeValue;
+            modulus = xmlHttp.responseXML.getElementsByTagName("modulus")[0].childNodes[0].nodeValue;
+            keylen = xmlHttp.responseXML.getElementsByTagName("keylen")[0].childNodes[0].nodeValue;
+			jsrsaenc(key,modulus,keylen);
+			a == 0;
+
+          }
+        }
+      }
+
+      window.setTimeout(function ()
+      {
+        xmlHttp.send(null);
+      }, 10);
+    }
+    catch(e){alert(e);}
+
+    tmpTest = false;
+   }
+
+	function jsrsaenc(key,mod,keylen)
+	{
+
+	var ekey = key;
+    var modulus = mod;
+    var rsakeylength =keylen;
+    SCnumbersize = rsakeylength/16;
+
+    if(trim(document.getElementById('passwords').value,"") != "")
+    {
+	var message = intonum(document.getElementById('passwords').value);
+	var e = hexnum(ekey);
+	var m = hexnum(modulus);
+	ModInverse = modulusinverse(hexnum(modulus),SCnumbersize);
+  	document.getElementById('password').value = tohex1(modpowwithinverse(message,e,m,ModInverse,SCnumbersize),SCnumbersize);
+
+//document.getElementById('data').value = tohex1(modpow(message,e,m,SCnumbersize),SCnumbersize);
+    }
+	loginAction();
+
+	}
+  </script>
+<script type="text/javascript">
+
+function formReset()
+{
+  var myForm=document.getElementById("loginForm");
+  myForm.reset();
+  document.getElementById('passwords').value='';
+}
+function loginAction()
+{
+  var myForm=document.getElementById("loginForm");
+  myForm.action="CheckValidity.do";
+  myForm.submit();
+}
+
+function isEnterKey(KEYCODE,OBJECT)
+{
+ if(KEYCODE==13)
+ {
+   loadKey();
+ }
+}
+
+</script>
+<br>
+<center>
+	<br>
+	<br>
+	<fieldset style="width: 500px; border-color: #993333;">
+		<legend align="center" class="lclass">
+			BIIS Login
+		</legend>
+		<p>
+			&nbsp;
+		<p>
+			<br>
+		<table align="center">
+			<tr>
+				<td id="middle" colspan="2" align="center">
+					UserID :
+				</td>
+				<td>
+					<form action="/BIIS_WEB/CheckValidity.do" method="POST"
+						id="loginForm" onsubmit="return false" style="padding: 0px;margin: 0px;">
+						<input type="text" name="userName" style="padding: 0px;height: 17px;width: 126px;"
+							value="" />
+						<input type="hidden" name="passWord" id="password" value="" />
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td id="middle" colspan="2" align="center">
+					Password :
+				</td>
+				<td>
+					<input type="password" id="passwords" class="passwords"
+						style="height: 15px; width: 125px"
+						onkeyup="isEnterKey(event.keyCode,this);" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+				<td>
+					&nbsp;
+				</td>
+				<td>
+					&nbsp;
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					If your password contains capital letters and digits,
+			</tr>
+			<tr>
+				<td colspan="3">
+					they must be typed the same way every time you log in.
+			</tr>
+			<tr>
+				<td align="center" colspan="3" height="42px" valign="middle">
+					<img src="/BIIS_WEB/resource/images/mb2.jpg" border="0" alt="" id="loginbutton"
+						onmouseover="this.src='/BIIS_WEB/resource/images/mb2_hover .jpg'"
+						onmouseout="this.src='/BIIS_WEB/resource/images/mb2.jpg'"
+						onclick="loadKey();" style="cursor: pointer;" />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<img src="/BIIS_WEB/resource/images/reset.jpg" border="0" alt=""
+						onmouseover="this.src='/BIIS_WEB/resource/images/reset_hover.jpg'"
+						onmouseout="this.src='/BIIS_WEB/resource/images/reset.jpg'"
+						onclick="formReset();" style="cursor: pointer;" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+
+					<li>
+						<font color="red" size="2" style="font-family: Verdana;">Invalid Login</font>
+					</li>
+
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<p align="center">
+						<b><a href="/BIIS_WEB/ForgotPassword.do?find">Forgot
+								password? Click Here.</a> </b>
+					</p>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<center>
+		&nbsp;
+</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%">
+			<tr>
+				<td>
+
+				</td>
+				<td>
+					&nbsp;
+				</td>
+				<td width="201px">
+					<a href="javascript:showInternetService()"><img
+							src="/BIIS_WEB/resource/images/internet_services.jpg" width="201"
+							height="39" border="0" alt="" />
+					</a>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+<td class="warp_right">
+	&nbsp;
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+	<td>
+		<table class="warp_down">
+			<tr>
+				<td class="warp_down_left">
+					&nbsp;
+				</td>
+				<td class="warp_down_bg">
+					&nbsp;
+				</td>
+				<td class="warp_down_right">
+					&nbsp;
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td class="footer_bg">
+		Bangladesh University of Engineering &amp; Technology (BUET),
+		Dhaka-1000, Bangladesh. Tel: (880 2) 9665650 Fax: (880 2) 8613046.
+		2007 &copy; All rights reserved, BUET
+	</td>
+</tr>
+</table>
+<p>
+	&nbsp;
+</p>
+</body>
+
+<HEAD>
+
+	<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+	<script type="text/javascript">
+	var maingroup = getCookie('maingroup');
+	if($(".ulsub")!=null)
+	{
+		var length = $(".ulsub").size();
+		if(length>2)
+			setMenu(maingroup);
+	}
+</script>
+</HEAD>
+</html>

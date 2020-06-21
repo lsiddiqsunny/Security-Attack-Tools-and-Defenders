@@ -48,7 +48,6 @@ It’s not as popular a technique as the TCP Half-Open. First, you have to send 
 
 ![Port Scanning Techniques](assests/5-basic-port-scanning-techniques-960x1078.jpg)
 
-
 ## Resourses
 
 - [Avast Answer](https://smb.avast.com/answers/port-scanning-techniques-and-explanations#:~:text=Port%20scanning%20is%20a%20method,analyzing%20responses%20to%20identify%20vulnerabilities.)

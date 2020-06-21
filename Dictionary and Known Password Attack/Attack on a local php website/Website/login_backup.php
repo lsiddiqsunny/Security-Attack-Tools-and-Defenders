@@ -1,0 +1,137 @@
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is already logged in, if yes then redirect him to welcome page
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: welcome.php");
+    exit;
+}
+ 
+// Include config file
+require_once "config.php";
+ 
+// Define variables and initialize with empty values
+$username = $password = "";
+$username_err = $password_err = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    // Check if username is empty
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Please enter username.";
+    } else{
+        $username = trim($_POST["username"]);
+    }
+    
+    // Check if password is empty
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter your password.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response']))
+    {
+        $secret = 'secret';
+        $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+        $responseData = json_decode($verifyResponse);
+       
+   
+    // Validate credentials
+    if(empty($username_err) && empty($password_err) && $responseData->success){
+        // Prepare a select statement
+        $sql = "SELECT id, username, password FROM users WHERE username = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            
+            // Set parameters
+            $param_username = $username;
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Store result
+                mysqli_stmt_store_result($stmt);
+                
+                // Check if username exists, if yes then verify password
+                if(mysqli_stmt_num_rows($stmt) == 1){                    
+                    // Bind result variables
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+                    if(mysqli_stmt_fetch($stmt)){
+                        if(sha1($password)== $hashed_password){
+                            echo "ok";
+                          
+                            // Password is correct, so start a new session
+                            session_start();
+                            
+                            // Store data in session variables
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $username;                            
+                            
+                            // Redirect user to welcome page
+                            header("location: welcome.php");
+                        } else{
+                            // Display an error message if password is not valid
+                            $password_err = "The password you entered was not valid.";
+                            echo $password_err;
+                        }
+                    }
+                } else{
+                    // Display an error message if username doesn't exist
+                    $username_err = "No account found with that username.";
+                    echo $username_err;
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+            
+        }
+    }
+        // Close statement
+        mysqli_stmt_close($stmt);
+    }
+    
+    // Close connection
+    mysqli_close($link);
+}
+?>
+ <script src='https://www.google.com/recaptcha/api.js'></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <style type="text/css">
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 350px; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Login</h2>
+        <p>Please fill in your credentials to login.</p>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                <label>Username</label>
+                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                <span class="help-block"><?php echo $username_err; ?></span>
+            </div>    
+            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control">
+                <span class="help-block"><?php echo $password_err; ?></span>
+            </div>
+            <div class="g-recaptcha" data-sitekey="secret"></div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+        </form>
+    </div>    
+</body>
+</html>
