@@ -13,7 +13,7 @@ At first, we have find the form elements which keep the userid and password. Aft
 My plan is somehow set the value of 'userName' and 'passwords' element and click the login action fuction.
 I write a python script which is using firefox web drive and selenium library. At first, I manually try to setup the value of these two elements and click the login button. Then I try to analysis the response. If it contains any message which can be found in a positive reply, our attack is successful.
 
-## Atatck
+## Attack
 
 For this moment, I am trying to take input from the user. You have to run **Attack.py**.
 
